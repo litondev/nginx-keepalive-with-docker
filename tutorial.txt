@@ -1,0 +1,8 @@
+// main tutorial
+https://developpaper.com/docker-keepalived-nginx-build-high-availability-cluster/
+
+// systemctl in docker container
+https://github.com/docker/compose/issues/4633
+
+install app => 
+yum install -y nginx keepalived vim net-tools  initscripts nano

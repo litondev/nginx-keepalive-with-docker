@@ -1,0 +1,33 @@
+version: '3'
+services:
+
+ web1:
+  privileged: true
+  image: centos
+  container_name: web1
+  restart: unless-stopped
+  tty: true   
+  networks:
+   - my-project
+
+ web2:
+  privileged: true
+  image: centos
+  container_name: web2
+  restart: unless-stopped
+  tty: true  
+  networks:
+   - my-project
+
+ webtest:
+  privileged: true
+  image: centos
+  container_name: webtest
+  restart: unless-stopped
+  tty: true  
+  networks:
+   - my-project
+
+networks:
+ my-project:
+  driver: bridge
