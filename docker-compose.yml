@@ -2,31 +2,55 @@ version: '3'
 services:
 
  web1:
-  privileged: true
-  image: centos
+  build:
+   context: .
+   dockerfile: DockerCentosImage
   container_name: web1
   restart: unless-stopped
   tty: true   
   networks:
    - my-project
+  privileged: false
+  tmpfs:
+    - /run
+    - /run/lock
+    - /tmp
+  volumes:
+    - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
  web2:
-  privileged: true
-  image: centos
+  build:
+   context: .
+   dockerfile: DockerCentosImage
   container_name: web2
   restart: unless-stopped
   tty: true  
   networks:
    - my-project
+  privileged: false
+  tmpfs:
+    - /run
+    - /run/lock
+    - /tmp
+  volumes:
+    - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
  webtest:
-  privileged: true
-  image: centos
+  build:
+   context: .
+   dockerfile: DockerCentosImage
   container_name: webtest
   restart: unless-stopped
   tty: true  
   networks:
    - my-project
+  privileged: false
+  tmpfs:
+    - /run
+    - /run/lock
+    - /tmp
+  volumes:
+    - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 networks:
  my-project:
