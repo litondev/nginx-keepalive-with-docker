@@ -10,7 +10,7 @@ services:
   tty: true   
   networks:
    - my-project
-  privileged: false
+  privileged: true
   tmpfs:
     - /run
     - /run/lock
@@ -27,7 +27,7 @@ services:
   tty: true  
   networks:
    - my-project
-  privileged: false
+  privileged: true
   tmpfs:
     - /run
     - /run/lock
@@ -44,7 +44,7 @@ services:
   tty: true  
   networks:
    - my-project
-  privileged: false
+  privileged: true
   tmpfs:
     - /run
     - /run/lock

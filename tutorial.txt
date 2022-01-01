@@ -4,5 +4,55 @@ https://developpaper.com/docker-keepalived-nginx-build-high-availability-cluster
 // systemctl in docker container
 https://github.com/docker/compose/issues/4633
 
-install app => 
-yum install -y nginx keepalived vim net-tools  initscripts nano
+tutor =>
+ JANGAN MENGUNAKAN DOCKER COMPOSE (KEMARIN PERNAH COBA DAN ADA MASALAH MUNGKIN KARENA privileged=false) 
+
+- docker run -d --name web1 --privileged=true centos /usr/sbin/init
+- docker exec -it web1 /bin/bash
+- yum install -y nginx keepalived net-tools  initscripts nano
+
+- docker run -d --name web2 --privileged=true centos /usr/sbin/init
+- docker exec -it web2 /bin/bash
+- yum install -y nginx keepalived net-tools  initscripts nano
+
+- docker run -d --name webtest --privileged=true centos /usr/sbin/init
+- docker exec -it webtest /bin/bash
+
+- master => 
+ - change nginx master
+ - -> nano /usr/share/nginx/html (KASIH TANDA MASTER)
+ 
+ - -> rm -rf /etc/keepalived/keepalived.conf
+ - -> touch /etc/keepalived/keepalived.confg
+ - setting keepalived sesuai master.conf
+ - -> systemctl restart keepalived
+ - check vip bound 
+ - -> ip a 
+ - pastikan vip address sudah ada di listnya sesaui eth (PENTING)
+
+ - lalu aktifkan nginx 
+ - -> nginx
+  
+
+- backup  =>
+ - change nginx slave 
+ - -> nano /usr/share/nginx/html (KASIH TANDA BACKUP)
+
+ - -> rm -rf /etc/keepalived/keepalived.conf
+ - -> touch /etc/keepalived/keepalived.confg
+ - setting keepalived sesuai backup/slave.conf
+ - -> systemctl restart keepalived
+ - check vip bound 
+ - -> ip a 
+  - pastikan vip address sudah ada di listnya sesaui eth (PENTING)
+
+ - lalu aktifkan nginx 
+ - -> nginx
+
+- testing
+ - testing dengan curl 
+ - -> curl 127.27.0.200 (vip addressnya)
+ - -> curl 127.27.0.200 | grep MASTER (cari tanda MASTER)
+ - stop master keepalived
+ - -> curl 172.17.0.200 | grep BACKUP/SLAVE (cari tanda BACKUP/SLAVE)
+ - done
